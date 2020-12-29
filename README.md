@@ -43,19 +43,36 @@ You can execute this module without any problem inside a CI/CD automation tool l
 
 ## Goal
 
-Create three different Lambdas that consume KMS, and tag them with the label "app" and the respective value, ex, "app1", "app2", and "app3". Then create another Lambda to generate a random call to one of those three lambdas. One last Lambda to initializes the processing in a specified period of time, name it, 1 hour for example.
+The whole process is triggered by lambda that runs the simulation over an specified period of time. This Lambda will upload simple dummy.txt files to an S3 location every 10 seconds (run it for example, 5 or 10 minutes for not generating that much cost). Every time a file is uploaded to S3, another Lambda (random-lambda-call) is triggered on upload, to randomly call one of the lambda-app-1, lambda-app-2, or lambda-app-3. This three processes simply encrypt the data in s3 using the KMS API and pushing it yet to a secondary s3 location.
 
 Create a Cloud Trail trail that encompasses the three events.
 
-You should answer the question: "who's consuming the most API calls to KMS?"
+You should answer the question: "who's consuming the most API calls to KMS?" use Athena!
 
 Solve the mistery!
+
+## KMS
+
+KMS is a service used to encrypt sensitive data in AWS. It is used to create cryptographic keys and controll their usage across differnet platforms and applications. AWS KMS maintains keys in Hardware Security Modules (HSMs) and uses a concept called envelope encryption where encrypted data is stored locally in the AWS service or application along with the key. 
+
+The Customer Master Key is the logical representation of a master key used to encrypt and decrypt a secondary key, called a data key. Data keys are stored at the service end and will only be decrypted via the CMK when requested by a service or an application.
+
+Two types of CMKs exist, the first type being those created automatically by AWS when the first encrypted resource is created, and the other being those created by the user. KMS will maintain the lifecycle and permissions of keys of the former category while the user will only be able to track the usage of the keys (both categories). (That's why it's called envelope encryption ,it is a key inside another key).
+
+
+## Usefull links
+
+https://docs.aws.amazon.com/kms/latest/developerguide/overview.html
+https://www.metricfire.com/blog/aws-kms-use-cases-features-and-alternatives/?GAID=undefined
+https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html
+
 
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change. (Come on, there are no major changes on this one).
 
 Please make sure to update tests as appropriate.
+
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
