@@ -65,6 +65,7 @@ Two types of CMKs exist, the first type being those created automatically by AWS
 https://docs.aws.amazon.com/kms/latest/developerguide/overview.html
 https://www.metricfire.com/blog/aws-kms-use-cases-features-and-alternatives/?GAID=undefined
 https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html
+https://docs.aws.amazon.com/code-samples/latest/catalog/python-kms-encrypt_decrypt_file.py.html
 
 
 
