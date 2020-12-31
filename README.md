@@ -51,6 +51,8 @@ You should answer the question: "who's consuming the most API calls to KMS?" use
 
 Solve the mistery!
 
+Bonus points if you add a custom dashboard in CloudWatch.
+
 ## KMS
 
 KMS is a service used to encrypt sensitive data in AWS. It is used to create cryptographic keys and controll their usage across differnet platforms and applications. AWS KMS maintains keys in Hardware Security Modules (HSMs) and uses a concept called envelope encryption where encrypted data is stored locally in the AWS service or application along with the key. 
