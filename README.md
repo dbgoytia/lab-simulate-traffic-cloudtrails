@@ -43,7 +43,7 @@ You can execute this module without any problem inside a CI/CD automation tool l
 
 ## Goal
 
-The whole process is triggered by lambda that runs the simulation over an specified period of time. This Lambda will upload simple dummy.txt files to an S3 location every 10 seconds (run it for example, 5 or 10 minutes for not generating that much cost). Every time a file is uploaded to S3, another Lambda (random-lambda-call) is triggered on upload, to randomly call one of the lambda-app-1, lambda-app-2, or lambda-app-3. This three processes simply encrypt the data in s3 using the KMS API and pushing it yet to a secondary s3 location.
+The whole process is triggered by a client simulation written in ruby. This program uploads simple dummy.txt files to an S3 location every 10 seconds (run it for example, 5 or 10 minutes for not generating that much cost). Every time a file is uploaded to S3, a Lambda (random-lambda-call) is triggered on upload, to randomly call one of the lambda-app-1, lambda-app-2, or lambda-app-3. This three processes simply encrypt the data in s3 using the KMS API and pushing it yet to a secondary s3 location.
 
 Create a Cloud Trail trail that encompasses the three events.
 
