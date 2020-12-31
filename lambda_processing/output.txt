@@ -1,0 +1,1 @@
+{"errorMessage":"undefined method `handler' for #<LambdaHandler:0x0000000002199a90>","errorType":"Function<NoMethodError>","stackTrace":[]}
