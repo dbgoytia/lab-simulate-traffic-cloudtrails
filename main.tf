@@ -40,7 +40,7 @@ resource "aws_s3_bucket" "thebeatles-lyrics-bucket-encrypted" {
   acl    = "private"
 
   tags = {
-    Name        = "lyrics-bucket"
+    Name        = "beatles-bucket"
     Environment = "Dev"
   }
 }
@@ -51,7 +51,7 @@ resource "aws_lambda_permission" "allow_bucket1" {
   function_name = aws_lambda_function.move-to-encrypted.arn
   principal     = "s3.amazonaws.com"
   source_arn    = aws_s3_bucket.thebeatles-lyrics-bucket.arn
-  depends_on = [ 
+  depends_on = [
     aws_lambda_permission.allow_bucket1
   ]
 }
@@ -66,7 +66,7 @@ resource "aws_s3_bucket_notification" "bucket_notification" {
 
   depends_on = [
     aws_lambda_function.move-to-encrypted
-    ]
+  ]
 }
 
 # --------------------------------------
@@ -94,6 +94,7 @@ resource "aws_iam_policy" "lambda-s3-policy" {
             "Effect": "Allow",
             "Action": [
                 "s3:GetObject",
+                "s3:ListBucket",
                 "s3:DeleteObject"
             ],
             "Resource": "arn:aws:s3:::${aws_s3_bucket.thebeatles-lyrics-bucket.bucket}/*"
@@ -130,7 +131,8 @@ resource "aws_iam_role" "lambda-execution-role" {
 EOF
 
   tags = {
-    tag-key = "tag-value"
+    Name        = "beatles-lambda-s3-role"
+    Environment = "Dev"
   }
 }
 
@@ -140,13 +142,18 @@ resource "aws_iam_role_policy_attachment" "lambda-execution-role-pattachment" {
 }
 
 resource "aws_lambda_function" "move-to-encrypted" {
-   
-   function_name = "move_to_encrypted"
-   s3_bucket = "lambda-repository-dcbg"
-   s3_key    = "v1.0.0/lambda_processing.zip"
 
-   handler = "lambda_function.lambda_handler"
-   runtime = "ruby2.7"
+  function_name = "move_to_encrypted"
+  s3_bucket     = "lambda-repository-dcbg"
+  s3_key        = "v1.0.0/lambda_processing.zip"
 
-   role = aws_iam_role.lambda-execution-role.arn
+  handler = "lambda_function.lambda_handler"
+  runtime = "ruby2.7"
+
+  role = aws_iam_role.lambda-execution-role.arn
+
+  tags = {
+    Name        = "beatles-lambda-move_to_encrypted"
+    Environment = "Dev"
+  }
 }
