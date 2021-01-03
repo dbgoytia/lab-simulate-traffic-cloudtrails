@@ -3,6 +3,7 @@ require "aws-sdk-s3"
 
 def lambda_handler(event:, context:)
     # Get the record
+    puts("Detected PUT on The Beatles bucket. Processing...")
     # event contains all information about uploaded object
     puts("Event :", event)
 
@@ -24,6 +25,6 @@ def lambda_handler(event:, context:)
     object.move_to(bucket: 'thebeatles-lyrics-bucket-encrypted', key: short_name)
     return {
        'statusCode': 200,
-       'body': json.dumps('Hello from S3 events Lambda!')
+       'body': json.dumps('File successfully ')
     }
 end
